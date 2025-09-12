@@ -1,0 +1,16 @@
+div{
+    background-color:yellowgreen;
+}
+form{
+    background-color:palegreen;
+}
+input{
+    background-color:inherit;
+}
+button{
+    background-color:inherit;
+    
+}
+button:hover{
+    background-color:rebeccapurple;
+}
