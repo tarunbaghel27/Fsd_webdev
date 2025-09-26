@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        input {
+            padding: 5px;
+            margin: 5px 0;
+            width: 200px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        #results {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Management</h1>
+    
+    <div>
+        <label>Student Name:</label><br>
+        <input type="text" id="studentName">
+    </div>
+    
+    <div>
+        <label>Marks:</label><br>
+        <input type="number" id="studentMarks">
+    </div>
+    
+    <button onclick="addStudent()">Add Student</button>
+    
+    <br><br>
+    
+    <button onclick="showAll()">Show All Students</button>
+    <button onclick="showPassed()">Show Passed Students</button>
+    <button onclick="calcAverage()">Calculate Average</button>
+    <button onclick="findTopper()">Find Topper</button>
+    
+    <div id="results">
+        Results will appear here...
+    </div>
+
+    <script>
+        let students = [];
+        
+        function addStudent() {
+            let name = document.getElementById('studentName').value;
+            let marks = document.getElementById('studentMarks').value;
+            
+            if (name === '' || marks === '') {
+                alert('Please enter both name and marks');
+                return;
+            }
+            
+            students.push({name: name, marks: parseInt(marks)});
+            
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentMarks').value = '';
+            
+            alert('Student added!');
+        }
+        
+        function showAll() {
+            if (students.length === 0) {
+                document.getElementById('results').innerHTML = 'No students found';
+                return;
+            }
+            
+            let result = '<h3>All Students:</h3>';
+            for (let i = 0; i < students.length; i++) {
+                result += (i+1) + '. ' + students[i].name + ' - ' + students[i].marks + ' marks<br>';
+            }
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        function showPassed() {
+            if (students.length === 0) {
+                document.getElementById('results').innerHTML = 'No students found';
+                return;
+            }
+            
+            let result = '<h3>Passed Students:</h3>';
+            let count = 0;
+            
+            for (let i = 0; i < students.length; i++) {
+                if (students[i].marks >= 40) {
+                    count++;
+                    result += count + '. ' + students[i].name + ' - ' + students[i].marks + ' marks<br>';
+                }
+            }
+            
+            if (count === 0) {
+                result += 'No students passed';
+            }
+            
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        function calcAverage() {
+            if (students.length === 0) {
+                document.getElementById('results').innerHTML = 'No students found';
+                return;
+            }
+            
+            let total = 0;
+            for (let i = 0; i < students.length; i++) {
+                total += students[i].marks;
+            }
+            
+            let average = total / students.length;
+            
+            document.getElementById('results').innerHTML = '<h3>Average Marks: ' + average.toFixed(2) + '</h3>';
+        }
+        
+        function findTopper() {
+            if (students.length === 0) {
+                document.getElementById('results').innerHTML = 'No students found';
+                return;
+            }
+            
+            let topMarks = 0;
+            let topperName = '';
+            for (let i = 0; i < students.length; i++) {
+                if (students[i].marks > topMarks) {
+                    topMarks = students[i].marks;
+                    topperName = students[i].name;
+                }
+            }
+            
+            document.getElementById('results').innerHTML = '<h3>Topper: ' + topperName + ' with ' + topMarks + ' marks</h3>';
+        }
+    </script>
+</body>
+</html>
